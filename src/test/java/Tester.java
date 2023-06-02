@@ -110,7 +110,8 @@ public class Tester {
         assertEquals(msgRequestStopResults[8], -105);
         assertEquals(msgRequestStopResults[9], -40);
 
-        MsgRequestSeqnumReset msgRequestSeqnumReset = new MsgRequestSeqnumReset(1);
+        MsgRequestSeqnumReset msgRequestSeqnumReset = new MsgRequestSeqnumReset();
+        msgRequestSeqnumReset.setSeqnum(UnsignedInteger.valueOf(1));
         byte[] msgRequestSeqnumResetResults = msgRequestSeqnumReset.constructSerialMessage();
         assertEquals(msgRequestSeqnumResetResults[0], -11);
         assertEquals(msgRequestSeqnumResetResults[1], 64);

@@ -20,4 +20,19 @@ Sequence of events for Startup of serial connection:
 - We run a stop message MsgRequestStop Type 0x46 seq 1
 - We run a device seq num reset message. Type 0x40 seq 1
   - wait for ack response 
-- 
+
+Logs for initial startup
+```
+2023-06-02 15:21:14.179462 - [Console 0]: Sending: PABB_MSG_REQUEST_STOP - seqnum = 1
+2023-06-02 15:21:14.193860 - [Console 0]: Sending: PABB_MSG_SEQNUM_RESET - seqnum = 1
+2023-06-02 15:21:14.197020 - [Console 0]: Sending: PABB_MSG_REQUEST_PROTOCOL_VERSION - seqnum = 2
+2023-06-02 15:21:14.200964 - [Console 0]: Sending: PABB_MSG_REQUEST_PROGRAM_ID - seqnum = 3
+2023-06-02 15:21:14.205496 - [Console 0]: Sending: PABB_MSG_REQUEST_PROGRAM_VERSION - seqnum = 4
+
+Stop
+Reset Seq
+fetch protocol version
+fetch program id
+fetch program version
+
+```

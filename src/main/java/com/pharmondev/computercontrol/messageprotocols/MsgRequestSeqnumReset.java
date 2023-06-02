@@ -7,9 +7,9 @@ import com.pharmondev.computercontrol.enums.MessageProtocol;
 import java.nio.ByteBuffer;
 
 public class MsgRequestSeqnumReset extends Message {
-    public MsgRequestSeqnumReset(long seqNum) {
+    public MsgRequestSeqnumReset() {
         this.type = MessageProtocol.PABB_MSG_SEQNUM_RESET;
-        this.seqnum = UnsignedInteger.valueOf(seqNum);
+        this.seqnum = UnsignedInteger.valueOf(1); //TODO will this will always be 1 I think....
     }
 
     @Override

@@ -5,6 +5,9 @@ import com.fazecast.jSerialComm.SerialPort;
 import com.fazecast.jSerialComm.SerialPortDataListener;
 import com.fazecast.jSerialComm.SerialPortEvent;
 import com.pharmondev.computercontrol.enums.MessageProtocol;
+import com.pharmondev.computercontrol.messageprotocols.Message;
+import com.pharmondev.computercontrol.utils.MessageSingleton;
+import com.pharmondev.computercontrol.utils.MessageUtils;
 
 public class ArduinoListener implements SerialPortDataListener {
     @Override
@@ -23,6 +26,13 @@ public class ArduinoListener implements SerialPortDataListener {
             int length = ~newData[0];
             MessageProtocol protocol = MessageProtocol.getMessageProtocol(newData[1]);
             System.out.println("protocol:" + protocol.name());
+
+
+            //TODO convert into message type from bytes.
+            Message m = MessageUtils.determineMessage(protocol, newData, length);
+
+            MessageSingleton.getInstance().getReceiver().receiveMessage(m);
+
 
         } else if (event.getEventType() == SerialPort.LISTENING_EVENT_DATA_WRITTEN) {
             // Data has been written to the serial port

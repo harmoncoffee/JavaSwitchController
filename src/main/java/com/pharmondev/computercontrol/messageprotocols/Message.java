@@ -12,6 +12,8 @@ public abstract class Message {
     UnsignedInteger seqnum;
     MessageProtocol type;
 
+    boolean isAckRequired;
+
     public abstract byte[] constructSerialMessage();
 
     public char getInvertedBytesChar(int size) {
@@ -53,5 +55,45 @@ public abstract class Message {
         }
 
         return reversedBytes;
+    }
+
+    public long getSize() {
+        return size;
+    }
+
+    public void setSize(long size) {
+        this.size = size;
+    }
+
+    public long getInvertedSize() {
+        return invertedSize;
+    }
+
+    public void setInvertedSize(long invertedSize) {
+        this.invertedSize = invertedSize;
+    }
+
+    public UnsignedInteger getSeqnum() {
+        return seqnum;
+    }
+
+    public void setSeqnum(UnsignedInteger seqnum) {
+        this.seqnum = seqnum;
+    }
+
+    public MessageProtocol getType() {
+        return type;
+    }
+
+    public void setType(MessageProtocol type) {
+        this.type = type;
+    }
+
+    public boolean isAckRequired() {
+        return isAckRequired;
+    }
+
+    public void setAckRequired(boolean ackRequired) {
+        isAckRequired = ackRequired;
     }
 }

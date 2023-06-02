@@ -2,11 +2,31 @@
 package com.pharmondev.computercontrol;
 
 import com.fazecast.jSerialComm.*;
+import com.pharmondev.computercontrol.gui.ControlGui;
 import com.pharmondev.computercontrol.listeners.ArduinoListener;
 import com.pharmondev.computercontrol.messageprotocols.MsgRequestSeqnumReset;
+import javax.swing.*;
+import mdlaf.MaterialLookAndFeel;
+import mdlaf.themes.JMarsDarkTheme;
+import org.opencv.core.Core;
 
 public class Main {
-    public static void main(String[] args) throws InterruptedException {
+    public static void main(String[] args)
+            throws InterruptedException, UnsupportedLookAndFeelException {
+
+        System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
+        UIManager.setLookAndFeel(new MaterialLookAndFeel(new JMarsDarkTheme()));
+
+        ControlGui gui = new ControlGui();
+        JFrame frame = new JFrame();
+        frame.setContentPane(gui.getMainPanel());
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.pack();
+        frame.setLocationRelativeTo(null);
+        frame.setVisible(true);
+    }
+
+    private static void testSerialPorts() {
         // Get the port to which your device is connected
         SerialPort[] ports = SerialPort.getCommPorts();
         System.out.println("Ports amount" + ports.length);
@@ -29,14 +49,14 @@ public class Main {
         System.out.println("Port opened: ");
 
         // msgRequestStop = new MsgRequestStop(1);
-        MsgRequestSeqnumReset msgRequestSeqnumReset = new MsgRequestSeqnumReset(1);
+        //MsgRequestSeqnumReset msgRequestSeqnumReset = new MsgRequestSeqnumReset(1);
 
         //        mainPort.writeBytes(
         //                msgRequestStop.constructSerialMessage(),
         //                msgRequestStop.constructSerialMessage().length);
-        mainPort.writeBytes(
-                msgRequestSeqnumReset.constructSerialMessage(),
-                msgRequestSeqnumReset.constructSerialMessage().length);
+//        mainPort.writeBytes(
+//                msgRequestSeqnumReset.constructSerialMessage(),
+//                msgRequestSeqnumReset.constructSerialMessage().length);
 
         // check zero to 40.
 

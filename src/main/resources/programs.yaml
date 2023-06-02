@@ -1,0 +1,13 @@
+games:
+  - name: Game 1
+    programs:
+      - name: Program 1
+        javaClassName: com.example.Program1
+      - name: Program 2
+        javaClassName: com.example.Program2
+  - name: Game 2
+    programs:
+      - name: Program 3
+        javaClassName: com.example.Program3
+      - name: Program 4
+        javaClassName: com.example.Program4
