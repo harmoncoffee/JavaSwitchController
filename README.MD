@@ -1,38 +1,115 @@
-# Notes
+# About the project 
+
+### Description:
+The goal of this project is to provide developers an alternative to c++
+development language environment for those who want to interact with the 
+Arduino Leonardo through serial programs in java.
+
+I provide no assurances that this code will always work, if the 
+PokemonAutomation team decides to change direction or provide a different solution it may stop functioning. 
+
+
+References: 
+https://github.com/PokemonAutomation/Microcontroller/blob/master/Wiki/Hardware/Hardware.md
+https://github.com/PokemonAutomation/Microcontroller/blob/master/Wiki/Software/Windows-ArduinoLeonardo.md
+
+### Inspiration: 
+This project is inspired by the fine work done by: 
+
+PokemonAutomation Team: https://github.com/PokemonAutomation
+
+Main codebase this port/project is built off of:
+- https://github.com/PokemonAutomation/Arduino-Source
+
+Inspired by: 
+- https://github.com/PokemonAutomation/ComputerControl 
 
 
 
-When you first connect to the serial. It seems to run a reset: 0x46 PABB_MSG_REQUEST_STOP  
+### How to run
+OS: Windows, currently only tested on Windows. 
+Compiled on Java 17
+Requirements: OpenCV 4.7.0 https://opencv.org/releases/ 
+This needs to be added to your system properties if using windows. 
 
-So message would be based off of: https://github.com/PokemonAutomation/Arduino-Source/blob/main/Common/Microcontroller/MessageProtocol.h
+This also needs an Arduino Leonardo(not tested on anything else) for interacting with the  
+
+### How to develop/contribute on
+
+System Requirements: 
+OpenCV 4.7.0 , Java 17 JDK, and Maven is used for dependency management. 
+
+- You are welcome to raise a PR and I can review it when I get a chance. 
+- I may likely add a discord channel if discussions are needed. 
+- If you're doing development on the gui section, this uses IntellJ for the guidesigner. 
+
+Need to confirm which works but: 
+This needs to be added to your system properties PATH if using windows.
+- \PathTo\opencv\build\bin
+- \PathTo\opencv\build
+- \PathTo\opencv\build\java
+- \PathTo\opencv\build\java\x64
+
+### How to add more programs. 
+
+- Add program to this yaml: 
+  - src/main/resources/programs.yaml 
+
+```yaml
+games:
+  - name: Game 1
+    programs:
+      - name: Program 1
+        javaClassName: com.example.Program1
+      - name: Program 2
+        javaClassName: com.example.Program2
+  - name: Game 2
+    programs:
+      - name: Program 3
+        javaClassName: com.example.Program3
+      - name: Program 4
+        javaClassName: com.example.Program4
 ```
-*  Message Format:
-*      byte 0: Length of the entire message. (bits are inverted)
-*      byte 1: Message Type
-*      byte X: Optional data of variable length.
-*      Last 4 bytes: CRC32C of the entire message except these last 4 bytes.
-*
-*      Thus there are 6 bytes of overhead for each message.
-```
 
-Sequence of events for Startup of serial connection: 
+- You can extend the program class. under com/pharmondev/computercontrol/programs
+```java 
+//example: 
+public class PressTwoButtons extends Program{
 
-- We run a stop message MsgRequestStop Type 0x46 seq 1
-- We run a device seq num reset message. Type 0x40 seq 1
-  - wait for ack response 
+  @Override
+  public void run() {
 
-Logs for initial startup
-```
-2023-06-02 15:21:14.179462 - [Console 0]: Sending: PABB_MSG_REQUEST_STOP - seqnum = 1
-2023-06-02 15:21:14.193860 - [Console 0]: Sending: PABB_MSG_SEQNUM_RESET - seqnum = 1
-2023-06-02 15:21:14.197020 - [Console 0]: Sending: PABB_MSG_REQUEST_PROTOCOL_VERSION - seqnum = 2
-2023-06-02 15:21:14.200964 - [Console 0]: Sending: PABB_MSG_REQUEST_PROGRAM_ID - seqnum = 3
-2023-06-02 15:21:14.205496 - [Console 0]: Sending: PABB_MSG_REQUEST_PROGRAM_VERSION - seqnum = 4
+    try {
+      sendMessage(); //TODO document
+      sendMessage(); //TODO document
+    }
+    catch (Exception e){
 
-Stop
-Reset Seq
-fetch protocol version
-fetch program id
-fetch program version
+    }
+
+  }
+}
+
 
 ```
+
+### Development Goals
+
+This project is still super early in development. 
+Many existing PokemonAutomation computer control functions do not exist yet.
+
+Initial Goals:
+- Complete all message type conversions to serial bytes. 
+- Complete all button presses into serial/message byte formats. 
+- Maybe rename Pabb, PabbPbf prefixes as I go. 
+- Need to write something to deserialize all the message types. 
+- Need to make sure all ui functions work
+- Need to make UI prettier. 
+  - trying to mirror existing computer control ui so existing users are familiar with the concept
+- Get one console working for programs
+
+Future Goals: 
+- Add existing computer control features 
+  - Multiple Consoles at one Time
+  - Discord/Twitch/etc integrations
+  - etc
